@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  duration    Int
+  active      Boolean  @default(true)
+  price       Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  ProfessionalServices ProfessionalService[]
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Professional Professional?
+  Appointment  Appointment[]
+}
+
+model Professional {
+  id        Int      @id @default(autoincrement())
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId              Int                   @unique
+  User                User                  @relation(fields: [userId], references: [id])
+  ProfessionalService ProfessionalService[]
+}
+
+model ProfessionalService {
+  id        Int      @id @default(autoincrement())
+  active    Boolean  @default(true)
+  price     Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  professionalId Int
+  Professional   Professional  @relation(fields: [professionalId], references: [id])
+  serviceId      Int
+  Service        Service       @relation(fields: [serviceId], references: [id])
+  Appointments   Appointment[]
+
+  @@unique([professionalId, serviceId])
+}
+
+model Appointment {
+  id        Int      @id @default(autoincrement())
+  active    Boolean  @default(true)
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId              Int
+  User                User                  @relation(fields: [userId], references: [id])
+  ProfessionalService ProfessionalService[]
+}
