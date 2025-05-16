@@ -35,6 +35,19 @@ export default function RootLayout({
         <SmoothScroll>
           {children}
         </SmoothScroll>
+        <footer className="text-center text-xs text-muted-foreground pb-4">
+          © {new Date().getFullYear()} Canarian Barber. Todos los derechos reservados.
+          <br />
+          Hecho con pasión por &nbsp;
+          <a
+            href="https://ouariachi.com/?utm_source=canarianbarber&utm_medium=footer"
+            target="_blank"
+            rel="noreferrer"
+            className="text-primary hover:underline"
+          >
+            @ouariachi
+          </a>
+        </footer>
       </body>
     </html>
   );
