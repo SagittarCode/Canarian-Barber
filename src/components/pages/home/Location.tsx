@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const Location = () => {
   return (
-    <section className="relative overflow-hidden my-20">
+    <section className="relative overflow-hidden my-20 z-5">
       <h1 className="text-3xl font-bold text-center mb-3">ENCUÉNTRANOS</h1>
       <div className="w-[600px] h-[400px] max-w-[100dvw] max-h-[100dvh] overflow-hidden mx-auto rounded-md border-2 border-accent">
         <MapContainer
