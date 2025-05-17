@@ -81,7 +81,10 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
 
 
     // ----- Carrousel
-    const amountToScroll = (carrouselRef.current.offsetWidth - windowWidth) + 200;
+    const carrouselEl = carrouselRef.current;
+    const wrapperEl = carrouselWrapperRef.current;
+
+    const amountToScroll = carrouselEl.scrollWidth - windowWidth;
 
     tl.to(
       carrouselRef.current,
@@ -90,7 +93,7 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
         ease: "none",
         duration: 3,
         scrollTrigger: {
-          trigger: carrouselWrapperRef.current,
+          trigger: wrapperEl,
           start: "top 10%",
           end: `+=${amountToScroll}`,
           scrub: 1,
@@ -126,7 +129,7 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
 
   return (
     <section className="relative min-h-[100dvh] pt-20 md:pt-10" id="services">
-      <div className="flex flex-col-reverse lg:flex-row gap-6 items-center justify-center h-full">
+      <div className="flex flex-col-reverse lg:flex-row gap-6 items-center justify-center h-full mb-20 md:mb-10">
         <div className="max-w-[95vw] w-[500px] rounded-xl">
           <figure className="frame" ref={frameRef}>
             <Image
@@ -140,7 +143,7 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
           </figure>
         </div>
 
-        <div className="grow max-w-[600px] mb-20 md:mb-10">
+        <div className="grow max-w-[600px]">
           <h1 className="text-center lg:text-left text-5xl font-bold text-primary/90 font-child-witch tracking-[0.12em]">
             SERVICIOS
           </h1>
@@ -168,13 +171,16 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
       </div>
 
       <div className="overflow-hidden" ref={carrouselWrapperRef}>
-        <div className="relative flex gap-[15dvw] items-center w-max px-[15dvw]" ref={carrouselRef}>
+        <div
+          className="relative flex px-[15dvw] gap-[15dvw] items-center w-max"
+          ref={carrouselRef}
+        >
           {carrouselItems.map((item, i) => (
             <div
               key={i}
               className={cn(
-                "relative h-[80dvh] w-[70dvw] rounded-lg overflow-clip",
-                "flex items-center justify-center",
+                "relative rounded-lg overflow-clip flex items-center justify-center",
+                "h-[80dvh] max-h-[100dvw] w-[70dvw]"
               )}
             >
               <Image
@@ -182,18 +188,27 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
                 alt={item.title}
                 width={item.width}
                 height={item.height}
-                className="max-w-[70dvw]"
-                sizes="auto auto"
+                className="object-cover h-full w-full"
                 priority
               />
-
-              <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl w-max font-bold text-primary drop-shadow-[0_2.2px_1.2px_rgba(255,255,255,1)]">
+              <span
+                className={cn(
+                  "absolute text-center left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-4xl sm:text-8xl font-bold text-primary",
+                  "drop-shadow-[0_2.2px_1.2px_rgba(255,255,255,1)]"
+                )}
+              >
                 {item.title}
               </span>
             </div>
           ))}
+
+          {/* Hack para que el carrousel se ajuste al ancho del viewport en mobile */}
+          {windowWidth && windowWidth < 500 &&
+            <div className="w-[50vw]" />
+          }
         </div>
       </div>
+
     </section>
   );
 };
