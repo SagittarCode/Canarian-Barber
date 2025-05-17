@@ -150,20 +150,18 @@ export const ServicesClient = ({ services }: ServicesClientProps) => {
           <ul ref={listRef} className="mt-3 rounded-md overflow-clip">
             {services.map((service, i) => (
               <li key={i}>
-                <a href={`/booking/${service.id}`}>
-                  <div className="w-full flex items-center gap-2 py-3 px-2 border-b border-border hover:bg-primary/5 transition-all duration-200 ease-in-out">
-                    <span className="h-1.5 w-1.5 bg-primary rounded-full" />
-                    <span className="text-xs sm:text-sm md:text-lg font-bold tracking-[0.12em]">
-                      {service.name}
+                <div className="w-full flex items-center gap-2 py-3 px-2 border-b border-border hover:bg-primary/5 transition-all duration-200 ease-in-out">
+                  <span className="h-1.5 w-1.5 bg-primary rounded-full" />
+                  <span className="text-xs sm:text-sm md:text-lg font-bold tracking-[0.12em]">
+                    {service.name}
+                  </span>
+                  <div className="flex flex-col text-right ml-auto">
+                    <span className="text-sm">{service.price}€</span>
+                    <span className="text-xs text-muted-foreground">
+                      {service.duration} min
                     </span>
-                    <div className="flex flex-col text-right ml-auto">
-                      <span className="text-sm">{service.price}€</span>
-                      <span className="text-xs text-muted-foreground">
-                        {service.duration} min
-                      </span>
-                    </div>
                   </div>
-                </a>
+                </div>
               </li>
             ))}
           </ul>
